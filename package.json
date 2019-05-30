@@ -1,0 +1,12 @@
+{
+  "name": "expandable-menu-extension",
+  "version": "1.0.0",
+  "main": "index.js",
+  "repository": "https://github.com/pempey/expandable-menu-extension",
+  "author": "Peter Empey <empey.peter@gmail.com>",
+  "license": "MIT",
+  "dependencies": {
+    "bootstrap": "^4.3.1",
+    "jquery": "^3.4.1"
+  }
+}

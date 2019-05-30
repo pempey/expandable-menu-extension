@@ -1,0 +1,54 @@
+.page-header{
+	font-family:Arial;
+	padding-left:25px;
+}
+
+#menuNav {
+	float:left;
+	width: 400px;
+	height: 790px;
+	overflow-y:auto;
+	font-family:Arial;
+}
+
+#vizContainer {
+	float:left;
+	width: 400px;
+	height: 500px;
+}
+		
+/***********************   Tree list styling   *******************/
+ul {
+	list-style-position: inside;
+	padding-left: 15px;
+	color:#4e79a7;
+	font-size:11pt;
+}
+.collapsed {
+	color: #4e79a7;
+}
+		
+li {
+	cursor: pointer;
+	list-style-type: none;
+}
+		
+li.collapsed::before {
+	content: "+ ";
+	display: inline-block;
+	width: 14px;
+}
+		
+li::before {
+	content: "- ";
+	display: inline-block;
+	width: 14px;
+}
+		
+li:last-child {
+	color:#4e79a7;
+}
+		
+li:last-child::before {
+	content: "";
+}
