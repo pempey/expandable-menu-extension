@@ -13,14 +13,18 @@
         dashboard.worksheets.forEach(function (worksheet) {
             $("#selectWorksheet").append("<option value='" + worksheet.name + "'>" + worksheet.name + "</option>");
         });
+        
+        
         var worksheetName = tableau.extensions.settings.get("worksheet");
         if (worksheetName != undefined) {
             $("#selectWorksheet").val(worksheetName);
             columnsUpdate();
+            parametersUpdate();
         }
  
         $('#selectWorksheet').on('change', '', function (e) {
             columnsUpdate();
+            parametersUpdate();
         });
         $('#cancel').click(closeDialog);
         $('#save').click(saveButton);
@@ -38,16 +42,29 @@
  
         worksheet.getSummaryDataAsync({ maxRows: 1 }).then(function (sumdata) {
             var worksheetColumns = sumdata.columns;
-            $("#selectCategory").text("");
-            $("#selectValue").text("");
+            $("#selectCategoryField").text("");
+            $("#selectReportField").text("");
+            $("#selectURLField").text("");
             var counter = 1;
             worksheetColumns.forEach(function (current_value) {
-                $("#selectCategory").append("<option value='" + counter + "'>"+current_value.fieldName+"</option>");
-                $("#selectValue").append("<option value='" + counter + "'>"+current_value.fieldName+"</option>");
+                $("#selectCategoryField").append("<option value='" + current_value.fieldName + "'>"+current_value.fieldName+"</option>");
+                $("#selectReportField").append("<option value='" + current_value.fieldName + "'>"+current_value.fieldName+"</option>");
+                $("#selectURLField").append("<option value='" + current_value.fieldName + "'>"+current_value.fieldName+"</option>");
                 counter++;
             });
-            $("#selectCategory").val(tableau.extensions.settings.get("categoryColumnNumber"));
-            $("#selectValue").val(tableau.extensions.settings.get("valueColumnNumber"));
+            $("#selectCategoryField").val(tableau.extensions.settings.get("categoryColumnNumber"));
+            $("#selectReportField").val(tableau.extensions.settings.get("reportColumnNumber"));
+            $("#selectURLField").val(tableau.extensions.settings.get("URLFiled"));
+        });
+        
+    }
+
+    function parametersUpdate() {
+        tableau.extensions.dashboardContent.dashboard.getParametersAsync().then(function (parameters) {
+            parameters.forEach(function (p) {
+                $("#selectLinkParameter").append("<option value='" + p.name + "'>"+p.name+"</option>");
+            });
+            $("#selectLinkParameter").val(tableau.extensions.settings.get("LinkParameter"));
         });
     }
  
@@ -62,8 +79,10 @@
     function saveButton() {
  
         tableau.extensions.settings.set("worksheet", $("#selectWorksheet").val());
-        tableau.extensions.settings.set("categoryColumnNumber", $("#selectCategory").val());
-        tableau.extensions.settings.set("valueColumnNumber", $("#selectValue").val());
+        tableau.extensions.settings.set("categoryColumnNumber", $("#selectCategoryField").val());
+        tableau.extensions.settings.set("reportColumnNumber", $("#selectReportField").val());
+        tableau.extensions.settings.set("URLFiled", $("#selectURLField").val());
+        tableau.extensions.settings.set("LinkParameter", $("#selectLinkParameter").val());
  
         tableau.extensions.settings.saveAsync().then((currentSettings) => {
             tableau.extensions.ui.closeDialog("10");
