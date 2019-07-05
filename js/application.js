@@ -2,6 +2,7 @@
 //"C:\Program Files\Tableau\Tableau 2018.3\bin\tableau.exe" --remote-debugging-port=8696 
 (function () {
   let unregisterFilterEventListener = null;
+  let unregisterSettingsEventListener = null;
   let worksheetName = null;
   let categoryColumnNumber = null;
   let reportColumnNumber = null;
